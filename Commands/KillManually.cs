@@ -29,7 +29,7 @@ namespace IW4M_Restart.Commands
             };
 
             E.Origin.Tell("Attempting to close this server");
-            fProc.FindAndKillProcessRuningOn();
+            fProc.FindAndKillServer();
 
             return Task.CompletedTask;
         }

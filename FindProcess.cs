@@ -19,7 +19,7 @@ namespace IW4M_Restart
             set { server = value; }
         }
 
-        public void FindAndKillProcessRuningOn()
+        public void FindAndKillServer()
         {
             List<string> pidList = new List<string>();
             List<string> list;
@@ -104,9 +104,9 @@ namespace IW4M_Restart
 
             process.Start();
 
-            string outstr = process.StandardOutput.ReadToEnd();
+            string outStr = process.StandardOutput.ReadToEnd();
 
-            return SplitByLineBreak(outstr);
+            return SplitByLineBreak(outStr);
         }
 
         public List<string> SplitByLineBreak(string processLines)
@@ -115,8 +115,8 @@ namespace IW4M_Restart
 
             if (processLines != null)
             {
-                string[] list = processLines.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-                processList.AddRange(collection: list);
+                string[] tokens = processLines.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                processList.AddRange(collection: tokens);
             }
 
             return processList;

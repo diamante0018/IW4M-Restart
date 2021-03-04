@@ -30,7 +30,7 @@ namespace IW4M_Restart
                 };
 
                 _logger.LogInformation("Server is lost, attempting to kill it via port");
-                fProc.FindAndKillProcessRuningOn();
+                fProc.FindAndKillServer();
             }
 
             return Task.CompletedTask;
