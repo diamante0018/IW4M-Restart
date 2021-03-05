@@ -29,6 +29,7 @@ namespace IW4M_Restart.Commands
             };
 
             E.Origin.Tell("Attempting to close this server");
+            server.Logger.WriteDebug("Owner is trying to kill the server");
             fProc.FindAndKillServer();
 
             return Task.CompletedTask;

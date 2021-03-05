@@ -10,7 +10,7 @@ namespace IW4M_Restart
     public class FindProcess
     {
         private const string UNIX_PID_REGX = @"\w+\s+(\d+).*";
-        //private const string WIND_PID_REGX = @".*\s+(\d+)";
+        private const string WIND_PID_REGX = @".*\s+(\d+)";
         private Server server;
 
         public Server MyServer
@@ -44,8 +44,23 @@ namespace IW4M_Restart
                     }
 
                     break;
+                case Platform.Windows:
+                    list = FindWindowsProcess();
+                    list = FilterProcessListBy(processList: list, filter: ":" + port);
+
+                    foreach (string pidString in list)
+                    {
+                        string pid = GetPidFrom(pidString: pidString, pattern: WIND_PID_REGX);
+
+                        if (!string.IsNullOrEmpty(pid))
+                        {
+                            pidList.Add(pid);
+                        }
+                    }
+
+                    break;
                 default:
-                    server.Logger.WriteError("This plugin was meant for a Linux operating system");
+                    server.Logger.WriteError("This plugin was meant for a Linux based OS or Windows");
                     break;
             }
 
@@ -58,11 +73,15 @@ namespace IW4M_Restart
         public Platform GetOSName()
         {
             string os = Environment.OSVersion.VersionString;
-            server.Logger.WriteInfo($"OS Info: {os.ToLower()}");
+            server.Logger.WriteDebug($"OS Info: {os}");
 
             if (os != null && os.ToLower().Contains("unix"))
             {
                 return Platform.Linux;
+            }
+            else
+            {
+                return Platform.Windows;
             }
 
             server.Logger.WriteError("Platform Unknown");
@@ -91,6 +110,30 @@ namespace IW4M_Restart
             {
                 FileName = "bash",
                 Arguments = "-c lsof -i",
+
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            Process process = new Process
+            {
+                StartInfo = processStart
+            };
+
+            process.Start();
+
+            string outStr = process.StandardOutput.ReadToEnd();
+
+            return SplitByLineBreak(outStr);
+        }
+
+        public List<string> FindWindowsProcess()
+        {
+            ProcessStartInfo processStart = new ProcessStartInfo
+            {
+                FileName = "netstat.exe",
+                Arguments = "-aon",
 
                 RedirectStandardOutput = true,
                 UseShellExecute = false,
