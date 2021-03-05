@@ -79,13 +79,12 @@ namespace IW4M_Restart
             {
                 return Platform.Linux;
             }
+
             else
             {
+                server.Logger.WriteError("Platform Unknown");
                 return Platform.Windows;
             }
-
-            server.Logger.WriteError("Platform Unknown");
-            return Platform.Unknown;
         }
 
         public void KillProcessBy(string pidString)
