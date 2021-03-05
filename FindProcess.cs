@@ -125,6 +125,7 @@ namespace IW4M_Restart
 
             string outStr = process.StandardOutput.ReadToEnd();
 
+            process.Dispose();
             return SplitByLineBreak(outStr);
         }
 
@@ -149,6 +150,7 @@ namespace IW4M_Restart
 
             string outStr = process.StandardOutput.ReadToEnd();
 
+            process.Dispose();
             return SplitByLineBreak(outStr);
         }
 
