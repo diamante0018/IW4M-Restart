@@ -82,7 +82,6 @@ namespace IW4M_Restart
 
             else
             {
-                server.Logger.WriteError("Platform Unknown");
                 return Platform.Windows;
             }
         }
