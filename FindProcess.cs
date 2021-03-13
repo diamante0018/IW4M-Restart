@@ -60,7 +60,7 @@ namespace IW4M_Restart
 
                     break;
                 default:
-                    server.Logger.WriteError("This plugin was meant for a Linux based OS or Windows");
+                    server.Logger.WriteError("This plugin was meant for Linux or Windows");
                     break;
             }
 

@@ -29,7 +29,7 @@ namespace IW4M_Restart
                     MyServer = S
                 };
 
-                _logger.LogInformation("Connection to server was lost. Attempting to kill process via port");
+                _logger.LogInformation("The connection to the server was lost. Attempting to kill the process via port");
                 fProc.FindAndKillServer();
             }
 
